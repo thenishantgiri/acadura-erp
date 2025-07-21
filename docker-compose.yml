@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: acadura
+      POSTGRES_PASSWORD: acadura
+      POSTGRES_DB: acadura
+    ports:
+      - '5432:5432'
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - '8080:8080'
+    command: start-dev --import-realm
+    volumes:
+      - ./infra/keycloak:/opt/keycloak/data/import
+
+  openfga:
+    image: openfga/openfga:latest
+    command: run
+    environment:
+      OPENFGA_DATASTORE_ENGINE: postgres
+      OPENFGA_DATASTORE_URI: postgresql://acadura:acadura@db:5432/acadura
+      OPENFGA_AUTO_MIGRATE: true
+    ports:
+      - '8082:8080' # REST on 8082
+      - '8083:8081' # gRPC (optional)
+    depends_on:
+      - db
+    restart: unless-stopped

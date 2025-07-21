@@ -2,13 +2,21 @@
   "name": "@acadura-erp/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "seed:openfga": "tsx scripts/seed-openfga.ts"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^11.0.0",
     "@nestjs/core": "^11.0.0",
+    "@nestjs/jwt": "^11.0.0",
+    "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.0",
+    "@prisma/client": "^6.12.0",
     "axios": "^1.6.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "prisma": "^6.12.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0"
   },
@@ -25,6 +33,7 @@
     "@nx/web": "21.2.4",
     "@nx/webpack": "21.2.4",
     "@nx/workspace": "21.2.4",
+    "@openfga/sdk": "^0.9.0",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
@@ -39,8 +48,13 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
+    "tsx": "^4.20.3",
     "typescript": "~5.8.2",
     "typescript-eslint": "^8.29.0",
     "webpack-cli": "^5.1.4"
+  },
+  "prisma": {
+    "schema": "apps/acadura-erp/prisma/schema.prisma",
+    "seed": "tsx apps/acadura-erp/prisma/seed.ts"
   }
 }
